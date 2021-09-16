@@ -1,6 +1,8 @@
 package com.htc.patientservice.controller;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,13 +21,13 @@ import com.htc.patientservice.persistence.IPatient;
 @RequestMapping("/api")
 public class PatientController {
 	
+	@Autowired
 	private IPatient repo;
  
 @GetMapping("/patients/{appointmentId}")
 Patient getPatient(@PathVariable Long appointmentId)
 {
-	Patient pat=null;
-	pat=repo.findById(appointmentId).get();
+	Patient pat=repo.findById(appointmentId).get();
 	return pat;
 	
 }
@@ -40,9 +42,9 @@ Patient createPatient(@RequestBody Patient pat)
 }
 
 @GetMapping("/patients")
-Patient  findAll() {
+List<Patient>  findAll() {
 
-  return (Patient) repo.findAll();
+  return repo.findAll();
 }
 
 @DeleteMapping("/patients/{appointmentId}")
@@ -53,10 +55,5 @@ void deletePatient(@PathVariable Long appointmentId)
 }
 
 
-@Autowired
-public void setRepo(IPatient repo) {
-	this.repo = repo;
-}
-	
 	
 }
